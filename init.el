@@ -80,10 +80,10 @@
 ;; org-brain:
 (use-package org-brain :ensure t
   :init
-  (setq org-brain-path "~/emacs.d/org/brain")
+  (setq org-brain-path "~/org/brain")
   :config
   (setq org-id-track-globally t)
-  (setq org-id-locations-file "~/.emacs.d/.org-id-locations")
+  (setq org-id-locations-file "~/org/.org-id-locations")
   (setq org-brain-visualize-default-choices 'all))
 
  (require 'org-brain)
@@ -214,9 +214,9 @@
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
 
-(setq org-agenda-files (list "~/.emacs.d/org/work.org"
-                             "~/.emacs.d/org/study.org" 
-                             "~/.emacs.d/org/home.org"))
+(setq org-agenda-files (list "~/org/work.org"
+                             "~/org/study.org" 
+                             "~/org/home.org"))
 
 
 
