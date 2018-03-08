@@ -8,103 +8,51 @@
 ;;; Code:
 
 
-;; Make everything UTF-8:
-
-(setenv "LC_CTYPE" "en_US.UTF-8")
-(setq locale-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
-
-;; Convenience settings, remove unneeded features.
-
-(show-paren-mode 1)
-(setq show-paren-delay 0)
-(tool-bar-mode -1)
-(when (not (display-graphic-p))
-  (menu-bar-mode -1))
-(setq inhibit-startup-screen t)
-(setq-default indent-tabs-mode nil)
-
-
-
-
-;; Emacs packages:
-
-(require 'package)
-(setq package-enable-at-startup nil)
-
-(setq package-archives
-      '(("melpa" . "https://melpa.org/packages/")
-        ("melpa-stable" . "https://stable.melpa.org/packages/")
-        ("marmelade" . "https://marmalade-repo.org/packages/")
-        ("gnu" . "https://elpa.gnu.org/packages/")
-        ("org" . "http://orgmode.org/elpa/")))
-
 
 (package-initialize)
 
-(when (not package-archive-contents)
-  (package-refresh-contents))
-
-
-;; use-package:
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+(load "~/.emacs.d/utf-8-config.el")
+(load "~/.emacs.d/general-convenience-config.el")
+(load "~/.emacs.d/package-config.el")
+(load "~/.emacs.d/ido-config.el")
 
 
 
-(eval-when-compile
-  (require 'use-package))
-
-(require 'diminish)
-(require 'bind-key)
-
-
+(use-package diminish
+  :ensure t)
+(use-package bind-key
+  :ensure t)
+(use-package cl
+  :ensure t)
 (use-package try
   :ensure t)
-
 (use-package which-key
   :ensure t 
   :config
   (which-key-mode))
-
-
-;; emacsclient server
-
-(server-start)
-
-
-;; org-brain:
-(use-package org-brain :ensure t
-  :init
-  (setq org-brain-path "~/org/brain")
+(use-package paredit
+  :ensure t
   :config
-  (setq org-id-track-globally t)
-  (setq org-id-locations-file "~/org/.org-id-locations")
-  (setq org-brain-visualize-default-choices 'all))
-
- (require 'org-brain)
-
-
-;; Slime:
-
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
-
-(global-set-key (kbd "C-x C-j") 'slime-eval-last-expression-in-repl)
-
-(require 'slime-autoloads)
-
-(setq inferior-lisp-program "/usr/local/bin/sbcl")
-(slime-connect "127.0.0.1" 4005)
-
-(setq slime-contribs '(slime-fancy))
-(setq slime-net-coding-system 'utf-8-unix)
-
-(global-set-key "\C-cs" 'slime-selector)
-
+  (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+  (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+  (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+  (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+  (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+  (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+  (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+  (add-hook 'slime-repl-mode-hook       #'enable-paredit-mode)
+  ;; Stop SLIME's REPL from grabbing DEL,
+  ;; which is annoying when backspacing over a '('
+  (defun override-slime-repl-bindings-with-paredit ()
+    (define-key slime-repl-mode-map
+    (read-kbd-macro paredit-backward-delete-key) nil))
+  (add-hook 'slime-repl-mode-hook 'override-slime-repl-bindings-with-paredit)
+  (defun my-paredit-nonlisp ()
+    "Turn on paredit mode for non-lisps."
+    (interactive)
+    (set (make-local-variable 'paredit-space-for-delimiter-predicates)
+         '((lambda (endp delimiter) nil)))
+    (enable-paredit-mode)))
 
 
 ;; Flycheck: Syntax check for all languages:
@@ -113,37 +61,32 @@
   :ensure t
   :init (global-flycheck-mode)
   :config
-  (add-hook 'after-init-hook #'global-flycheck-mode)
-  (setf flycheck-indication-mode :left))
+  (add-hook 'after-init-hook #'global-flycheck-mode))
+
+(load "~/.emacs.d/php-config.el")
 
 
+;; JavaScript:
 
-;; PHP:
+(use-package js2-mode
+  :ensure t
+  :interpreter "node"
+  :mode "\\.js" "\\.jsx"
+  :config
+  (setq js2-highlight-level 3)
+  (add-hook 'js2-mode-hook
+            (lambda () (flycheck-mode t)))
+  (add-hook 'js2-mode-hook
+            (lambda () (flycheck-mode t)))
+  :bind (:map js2-mode-map
+              ("{" . paredit-open-curly)
+              ("}" . paredit-close-curly-and-newline)))
+
+(use-package json-mode
+  :ensure t
+  :mode "\\.json")
 
 
-
-(autoload 'php-mode "php-mode" "Major mode for editing php code." t)
-(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
-
-
-
-
-(defun my-paredit-nonlisp ()
-  "Turn on paredit mode for non-lisps."
-  (interactive)
-  (set (make-local-variable 'paredit-space-for-delimiter-predicates)
-       '((lambda (endp delimiter) nil)))
-  (paredit-mode 1))
-
-(add-hook 'js-mode-hook 'js2-minor-mode)
-(add-hook 'js2-mode-hook 'ac-js2-mode)
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx$" . js-mode))
-(setq js2-highlight-level 3)
-(add-hook 'js-mode-hook
-          (lambda () (flycheck-mode t)))
-(add-hook 'js2-mode-hook
-          (lambda () (flycheck-mode t)))
 ;;; Search support:
 (defun get-search-term (beg end)
   "message region or \"empty string\" if none highlighted"
@@ -169,11 +112,6 @@
                   (interactive)
                   (find-grep-dired-do-search "~/src/xidy" (get-search-term))))
 (put 'downcase-region 'disabled nil)
-; (package-install 'php-mode)
-(autoload 'php-mode "php-mode" "Major mode for editing php code." t)
-(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
-(add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
-
 
 
 
@@ -183,9 +121,22 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(electric-pair-mode t)
+ '(org-agenda-files (quote ("~/org/work.org" "~/org/study.org")))
  '(package-selected-packages
    (quote
-    (2048-game magit use-package exec-path-from-shell flycheck eww-lnum httprepl git-command git flymake-jslint flymake-php flymake-jshint flymake flylisp neotree markdown-mode markdown-mode+))))
+    (ac-php web-mode paredit json-mode adoc-mode auto-complete better-defaults projectile cider clojure-mode langtool dictionary 2048-game magit use-package exec-path-from-shell flycheck eww-lnum httprepl git-command git flymake-jslint flymake-php flymake-jshint flymake flylisp neotree markdown-mode markdown-mode+)))
+ '(safe-local-variable-values
+   (quote
+    ((Package . HUNCHENTOOT)
+     (Package . CH1-EXERCISES)
+     (Package . CH3-EXERCISES)
+     (Package . CH3)
+     (Package . CH4-FINAL)
+     (Package . CH4-FIRST)
+     (Base . 10)
+     (Package . CL-USER)
+     (Syntax . COMMON-LISP)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -194,67 +145,49 @@
  )
 
 
+(load "~/.emacs.d/git-config.el")
 
-(use-package magit)
-(require 'magit)
-
-
-
-; /usr/local/Cellar/git/2.11.0/share/emacs/site-lisp/git/git.el
-(add-to-list 'load-path "/usr/local/Cellar/git/2.11.0/share/emacs/site-lisp/git")
-(require 'git)
-(require 'git-blame)
-
-
-
-(add-to-list 'org-modules 'org-mac-iCal)
-
-(require 'org)
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(setq org-log-done t)
-
-(setq org-agenda-files (list "~/org/work.org"
-                             "~/org/study.org" 
-                             "~/org/home.org"))
-
-
-
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((lisp . t)))
-
-
-(setq org-src-fontify-natively t)
-
-(require 'org-indent)
-
-(add-hook 'org-mode-hook #'toggle-word-wrap)
-
-(setq org-startup-truncated nil)  ; This works
-
-(define-key org-mode-map "\M-q" 'toggle-truncate-lines)
-
-(setq org-mobile-directory "~/Dropbox/MobileOrg")
-(setq org-mobile-files '("~/.emacs.d/org"))
-
-
-; (setq org-startup-indented t)
+(load "~/.emacs.d/org-config.el")
 
 
 (put 'dired-find-alternate-file 'disabled nil)
 
-(defun prev-window ()
-  (interactive)
-  (other-window -1))
 
-(define-key global-map (kbd "C-x p") 'prev-window)
+;; Clojure
+
+(defvar my-packages '(auto-complete
+                      better-defaults
+                      projectile
+                      clojure-mode
+                      cider))
+(dolist (p my-packages)
+  (unless (package-installed-p p)
+    (package-install p)))
+
+
+;; Date
+(use-package calendar
+  :ensure t)
+
+(setq calendar-latitude 51.3)
+(setq calendar-longitude 5.3)
+(setq calendar-location-name "Eindhoven, NL")
+(setq calendar-mark-diary-entries-flag t)
+
+
+;; Proper bash-shell:
+
+(push "--login" explicit-bash-args)
+(global-set-key [f1] 'eshell)
+
+                                       
+;; emacsclient server
+
+(server-start)
 
 
 
-(put 'narrow-to-region 'disabled nil)
+(load "~/.emacs.d/slime-config.el")
+;;; init.el ends here
 
-
-(desktop-save-mode 1)
 

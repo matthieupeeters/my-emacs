@@ -1,5 +1,5 @@
 ./org/
-./SessionDesktop.el
+SessionDesktop.el
 ./auto-save-list/
 ./network-security.data
 .org-id-locations
@@ -24,3 +24,8 @@ site-lisp/adventur-mode
 /history
 /ido.last
 /recentf
+./.emacs.desktop
+ac-comphist.dat
+eshell/
+xkcd/
+.emacs.desktop
