@@ -9,7 +9,7 @@ backups
 .places
 session.*
 tramp
-elpa
+elpa/
 swank
 emms
 site-lisp/adventur-mode
@@ -29,3 +29,4 @@ ac-comphist.dat
 eshell/
 xkcd/
 .emacs.desktop
+elpa/
