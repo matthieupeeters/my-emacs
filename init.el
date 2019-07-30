@@ -86,6 +86,10 @@
   :ensure t
   :mode "\\.json")
 
+(use-package dumb-jump)
+
+;; (dump-jump-mode)
+
 
 ;;; Search support:
 (defun get-search-term (beg end)
@@ -125,7 +129,8 @@
  '(org-agenda-files (quote ("~/org/work.org" "~/org/study.org")))
  '(package-selected-packages
    (quote
-    (omnisharp ## ac-php web-mode paredit json-mode adoc-mode auto-complete better-defaults projectile cider clojure-mode langtool dictionary 2048-game magit use-package exec-path-from-shell flycheck eww-lnum httprepl git-command git flymake-jslint flymake-php flymake-jshint flymake flylisp neotree markdown-mode markdown-mode+)))
+    (omnisharp ## ac-php web-mode paredit json-mode adoc-mode auto-complete better-defaults projectile cider clojure-mode langtool dictionary 2048-game magit use-package exec-path-from-shell flycheck eww-lnum httprepl git-command git flymake-jslint flymake-php flymake-jshint flymake flylisp neotree markdown-mode markdown-mode+)
+    (ac-php-core dumb-jump ac-php web-mode paredit json-mode adoc-mode auto-complete better-defaults projectile cider clojure-mode langtool dictionary 2048-game magit use-package exec-path-from-shell flycheck eww-lnum httprepl git-command git flymake-jslint flymake-php flymake-jshint flymake flylisp neotree markdown-mode markdown-mode+)))
  '(safe-local-variable-values
    (quote
     ((Package . HUNCHENTOOT)
@@ -194,3 +199,6 @@
 ;;; init.el ends here
 
 
+
+
+(put 'erase-buffer 'disabled nil)
