@@ -21,12 +21,14 @@
 
 (define-key global-map (kbd "C-x p") 'prev-window)
 
-;; fix the PATH variable
+;; fix the PATH variable on Unix systems
 (defun set-exec-path-from-shell-PATH ()
   "Instruct bash that a certain terminal is in use."
-  (let ((path-from-shell (shell-command-to-string "TERM=vt100 $SHELL -i -c 'echo $PATH'")))
-    (setenv "PATH" path-from-shell)
-    (setq exec-path (split-string path-from-shell path-separator))))
+  (if (or (string-equal system-type "darwin")
+          (string-equal system-type "gnu/linux"))
+      (let ((path-from-shell (shell-command-to-string "TERM=vt100 $SHELL -i -c 'echo $PATH'")))
+        (setenv "PATH" path-from-shell)
+        (setq exec-path (split-string path-from-shell path-separator)))))
 
 (when window-system (set-exec-path-from-shell-PATH))
 
