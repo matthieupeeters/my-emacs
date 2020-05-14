@@ -129,8 +129,7 @@
  '(org-agenda-files (quote ("~/org/work.org" "~/org/study.org")))
  '(package-selected-packages
    (quote
-    (omnisharp ## ac-php web-mode paredit json-mode adoc-mode auto-complete better-defaults projectile cider clojure-mode langtool dictionary 2048-game magit use-package exec-path-from-shell flycheck eww-lnum httprepl git-command git flymake-jslint flymake-php flymake-jshint flymake flylisp neotree markdown-mode markdown-mode+)
-    (ac-php-core dumb-jump ac-php web-mode paredit json-mode adoc-mode auto-complete better-defaults projectile cider clojure-mode langtool dictionary 2048-game magit use-package exec-path-from-shell flycheck eww-lnum httprepl git-command git flymake-jslint flymake-php flymake-jshint flymake flylisp neotree markdown-mode markdown-mode+)))
+    (which-key web-mode use-package try shut-up projectile php-mode paredit-everywhere org-brain omnisharp neotree markdown-mode magit json-mode js2-mode httprepl git-command git flymake-php flymake-jslint flymake-jshint flymake exec-path-from-shell eww-lnum emstar cider better-defaults)))
  '(safe-local-variable-values
    (quote
     ((Package . HUNCHENTOOT)
@@ -153,6 +152,8 @@
 (load "~/.emacs.d/git-config.el")
 
 (load "~/.emacs.d/org-config.el")
+
+(load "~/.emacs.d/csharp-config.el")
 
 
 (put 'dired-find-alternate-file 'disabled nil)
@@ -196,6 +197,10 @@
 
 
 (load "~/.emacs.d/slime-config.el")
+
+
+(load "~/.emacs.d/no-easy-keys.el") (no-easy-keys 1)
+
 ;;; init.el ends here
 
 
