@@ -159,11 +159,11 @@
  )
 
 
-(load "~/.emacs.d/git-config.el")
+(load "git-config.el")
 
-(load "~/.emacs.d/org-config.el")
+(load "org-config.el")
 
-(load "~/.emacs.d/csharp-config.el")
+(load "csharp-config.el")
 
 
 (put 'dired-find-alternate-file 'disabled nil)
@@ -206,10 +206,12 @@
   (message "Unknown system for server (Windows?)."))
 
 
-; (load "~/.emacs.d/slime-config.el")
+(load "slime-config.el")
 
 
-(load "~/.emacs.d/no-easy-keys.el") (no-easy-keys 1)
+(load "no-easy-keys.el")
+
+(no-easy-keys 1)
 
 ;;; init.el ends here
 

@@ -33,3 +33,4 @@ xkcd/
 .emacs.desktop
 elpa/
 
+.emacs.desktop.lock
