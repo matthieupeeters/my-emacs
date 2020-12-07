@@ -206,7 +206,7 @@
   (message "Unknown system for server (Windows?)."))
 
 
-(load "~/.emacs.d/slime-config.el")
+; (load "~/.emacs.d/slime-config.el")
 
 
 (load "~/.emacs.d/no-easy-keys.el") (no-easy-keys 1)
