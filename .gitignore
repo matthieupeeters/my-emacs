@@ -34,3 +34,4 @@ xkcd/
 elpa/
 
 .emacs.desktop.lock
+.recentf

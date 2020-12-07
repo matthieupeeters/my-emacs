@@ -79,3 +79,35 @@
 (use-package tagedit
   :ensure t)
 ;; not from emacs-for-clojure
+
+
+
+;; Clojure
+
+(defvar my-packages '(auto-complete
+                      better-defaults
+                      projectile
+                      clojure-mode
+                      cider))
+(dolist (p my-packages)
+  (unless (package-installed-p p)
+    (package-install p)))
+
+(use-package auto-complete
+  :ensure t)
+(use-package better-defaults
+  :ensure t)
+(use-package projectile
+  :ensure t)
+(use-package clojure-mode
+  :ensure t)
+(use-package cider
+  :ensure t)
+
+
+
+
+(put 'erase-buffer 'disabled nil)
+
+
+

@@ -75,3 +75,7 @@ nil nil 'no-easy-keys-minor-mode-map)
 
 (provide 'no-easy-keys)
 ;;; no-easy-keys.el ends here
+
+
+(no-easy-keys 1)
+

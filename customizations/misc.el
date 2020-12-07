@@ -1,3 +1,8 @@
+
+
+(put 'dired-find-alternate-file 'disabled nil)
+
+
 ;; Changes all yes/no questions to y/n type
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -10,3 +15,5 @@
 
 ;; Go straight to scratch buffer on startup
 (setq inhibit-startup-message t)
+
+
