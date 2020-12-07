@@ -4,12 +4,16 @@
 (setq package-enable-at-startup nil)
 
 (setq package-archives
-      '(("melpa" . "https://melpa.org/packages/")
+      '(("tromey" . "http://tromey.com/elpa/")
+        ("melpa" . "https://melpa.org/packages/")
         ("melpa-stable" . "https://stable.melpa.org/packages/")
         ("marmelade" . "https://marmalade-repo.org/packages/")
         ("gnu" . "https://elpa.gnu.org/packages/")
         ("org" . "http://orgmode.org/elpa/")))
 
+(setq package-pinned-packages
+      '((cider . "melpa-stable")
+        (magit . "melpa-stable")))
 
 (package-initialize)
 

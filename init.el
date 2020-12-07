@@ -11,11 +11,14 @@
 
 (package-initialize)
 
-(load "~/.emacs.d/utf-8-config.el")
-(load "~/.emacs.d/general-convenience-config.el")
-(load "~/.emacs.d/package-config.el")
-(load "~/.emacs.d/ido-config.el")
+(add-to-list 'load-path "~/.emacs.d")
+(add-to-list 'load-path "~/.emacs.d/vendor")
+(add-to-list 'load-path "~/.emacs.d/customizations")
 
+
+(load "utf-8-config.el")
+(load "general-convenience-config.el")
+(load "package-config.el")
 
 
 (use-package diminish
@@ -55,6 +58,10 @@
     (enable-paredit-mode)))
 
 
+
+(load "clojure.el")
+
+
 ;; Flycheck: Syntax check for all languages:
 
 (use-package flycheck
@@ -63,7 +70,10 @@
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
-(load "~/.emacs.d/php-config.el")
+
+;; Some loads
+(load "ido-config.el") ; this file also contains smex and projectile config
+(load "php-config.el")
 
 
 ;; JavaScript:
@@ -202,8 +212,6 @@
 (load "~/.emacs.d/no-easy-keys.el") (no-easy-keys 1)
 
 ;;; init.el ends here
-
-
 
 
 (put 'erase-buffer 'disabled nil)
