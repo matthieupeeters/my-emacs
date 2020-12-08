@@ -35,3 +35,5 @@ elpa/
 
 .emacs.desktop.lock
 .recentf
+.#*
+/places

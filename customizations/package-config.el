@@ -7,7 +7,7 @@
       '(("tromey" . "http://tromey.com/elpa/")
         ("melpa" . "https://melpa.org/packages/")
         ("melpa-stable" . "https://stable.melpa.org/packages/")
-        ("marmelade" . "https://marmalade-repo.org/packages/")
+        ("marmalade" . "https://marmalade-repo.org/packages/")
         ("gnu" . "https://elpa.gnu.org/packages/")
         ("org" . "http://orgmode.org/elpa/")))
 
