@@ -1,6 +1,7 @@
 
 ;;; Search
-(use-package dumb-jump)
+(use-package dumb-jump
+  :ensure t)
 
 
 ;;; Search support:

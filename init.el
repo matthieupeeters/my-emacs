@@ -29,11 +29,12 @@
 (load "search-config.el")
 (load "git-config.el")
 (load "org-config.el")
+(load "org-static-blog-config.el")
 (load "csharp-config.el")
 (load "date-config.el")
 
 (load "slime-config.el")
-(load "no-easy-keys-config.el")
+;; (load "no-easy-keys-config.el")
 
 (load "editing.el")
 (load "elisp-editing.el")
