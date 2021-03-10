@@ -3,12 +3,12 @@
   :ensure t)
 
 
-
+(setq org-static-blog-host "")
 
 (setq org-static-blog-publish-title "Matthieu Peeters' blog")
 (setq org-static-blog-publish-url "https://blog.matthieupeeters.nl/")
 
-(setq org-static-blog-publish-directory "/var/www/html/blog.matthieupeeters.nl/")
+(setq org-static-blog-publish-directory (concat org-static-blog-host "/var/www/html/blog.matthieupeeters.nl/"))
 (setq org-static-blog-posts-directory (concat org-static-blog-publish-directory "posts/"))
 (setq org-static-blog-drafts-directory (concat org-static-blog-publish-directory "drafts/"))
 (setq org-static-blog-enable-tags t)

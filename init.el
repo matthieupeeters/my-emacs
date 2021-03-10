@@ -33,7 +33,11 @@
 (load "csharp-config.el")
 (load "date-config.el")
 
-(load "slime-config.el")
+(load "helm-config.el")
+
+;; (load "slime-config.el")
+(load "sly-config.el")
+
 ;; (load "no-easy-keys-config.el")
 
 (load "editing.el")
@@ -46,7 +50,6 @@
 (load "ui.el")
 
 
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -57,7 +60,7 @@
  '(org-agenda-files (quote ("~/org/work.org" "~/org/study.org")))
  '(package-selected-packages
    (quote
-    (which-key web-mode use-package try shut-up projectile php-mode paredit-everywhere org-brain omnisharp neotree markdown-mode magit json-mode js2-mode httprepl git-command git flymake-php flymake-jslint flymake-jshint flymake exec-path-from-shell eww-lnum emstar cider better-defaults)))
+    (helm org-static-blog which-key web-mode use-package try shut-up projectile php-mode paredit-everywhere org-brain omnisharp neotree markdown-mode magit json-mode js2-mode httprepl git-command git flymake-php flymake-jslint flymake-jshint flymake exec-path-from-shell eww-lnum emstar cider better-defaults)))
  '(safe-local-variable-values
    (quote
     ((Package . HUNCHENTOOT)
