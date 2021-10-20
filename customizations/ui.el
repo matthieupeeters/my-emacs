@@ -67,3 +67,10 @@
 
 ;; no bell
 (setq ring-bell-function 'ignore)
+
+
+(setq global-hl-line-mode 1)
+
+(set-face-background 'hl-line "#ffffe0")
+
+(set-face-foreground 'highlight nil)

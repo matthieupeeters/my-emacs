@@ -7,7 +7,7 @@
  '(electric-pair-mode t)
  '(org-agenda-files '("~/org/work.org" "~/org/study.org"))
  '(package-selected-packages
-   '(which-key web-mode use-package try shut-up projectile php-mode paredit-everywhere org-brain omnisharp neotree markdown-mode magit json-mode js2-mode httprepl git-command git flymake-php flymake-jslint flymake-jshint flymake exec-path-from-shell eww-lnum emstar cider better-defaults))
+   '(helm org-static-blog which-key web-mode use-package try shut-up projectile php-mode paredit-everywhere org-brain omnisharp neotree markdown-mode magit json-mode js2-mode httprepl git-command git flymake-php flymake-jslint flymake-jshint flymake exec-path-from-shell eww-lnum emstar cider better-defaults))
  '(safe-local-variable-values
    '((Package . HUNCHENTOOT)
      (Package . CH1-EXERCISES)
