@@ -15,22 +15,26 @@
       '((cider . "melpa-stable")
         (magit . "melpa-stable")))
 
-(package-initialize)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
 
 
-;; use-package:
+;; Bootstrap 'use-package'
+; (eval-after-load 'gnutls
+;   '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
+
 (unless (package-installed-p 'use-package)
-  (package-refresh-contents)
+  (package-refresh-contents) 
   (package-install 'use-package))
 
-
-
-(eval-when-compile
+(eval-when-compile  
   (require 'use-package))
 
+(setq use-package-always-ensure t)
+
+
+(require 'bind-key)
 
 
 

@@ -85,7 +85,7 @@
       ;; Mouse yank commands yank at point instead of at click.
       mouse-yank-at-point t)
 
-;; No cursor blinking, it's distracting
+;; No cursor blinking, it's distracting (I like it!)
 ; (blink-cursor-mode 0)
 
 ;; full path in title bar
