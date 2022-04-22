@@ -71,6 +71,6 @@
 
 (setq global-hl-line-mode 1)
 
-(set-face-background 'hl-line "#ffffe0")
+(set-face-background 'hl-line "#4f4f0e")
 
 (set-face-foreground 'highlight nil)
