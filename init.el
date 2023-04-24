@@ -21,7 +21,7 @@
 (load "small-packages.el")
 (load "paredit-config.el")
 (load "clojure-config.el")
-
+(load "scheme-config.el")
 ;; Some loads
 (load "ido-config.el") ; this file also contains smex and projectile config
 (load "php-config.el")
@@ -37,6 +37,11 @@
 
 ;; (load "slime-config.el")
 (load "sly-config.el")
+(load "maxima-config.el")
+
+(load "mail-config.el")
+
+(load "python-config.el")
 
 ;; (load "no-easy-keys-config.el")
 
@@ -49,6 +54,7 @@
 (load "shell-integration.el")
 (load "ui.el")
 
+(load "translate-char.el")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

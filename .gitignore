@@ -37,3 +37,6 @@ elpa/
 .recentf
 .#*
 /places
+/eln-cache/
+/games/
+
