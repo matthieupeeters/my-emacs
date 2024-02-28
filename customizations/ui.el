@@ -111,7 +111,7 @@ apps are not started from a shell."
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'load-path "~/.emacs.d/themes")
 ; (load-theme 'tomorrow-night-bright t)
-(load-theme 'material t)
+; (load-theme 'material t)
 
 
 ;; increase font size for better readability
