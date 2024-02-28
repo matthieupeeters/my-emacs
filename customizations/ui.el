@@ -1,23 +1,107 @@
 ;; These customizations change the way emacs looks and disable/enable
-;; some user interface elements. Some useful customizations are
-;; commented out, and begin with the line "CUSTOMIZE". These are more
+;; some user interface elements. These are more
 ;; a matter of preference and may require some fiddling to match your
 ;; preferences
 
-;; Turn off the menu bar at the top of each frame because it's distracting
-(menu-bar-mode -1)
+;; diminish allows for less or no minor-mode indication
+(use-package diminish :ensure t)
+
+(use-package shut-up :ensure t :defer t)
+
+(setq show-paren-delay 0)
+
 
 ;; Show line numbers
-(global-linum-mode)
+; (global-linum-mode)
 
-;; You can uncomment this to remove the graphical toolbar at the top. After
-;; awhile, you won't need the toolbar.
-;; (when (fboundp 'tool-bar-mode)
-;;   (tool-bar-mode -1))
+(setq inhibit-startup-screen t)
 
-;; Don't show native OS scroll bars for buffers because they're redundant
-(when (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
+;; Use spaces instead of tabs:
+(setq-default indent-tabs-mode nil)
+
+
+;; Enable narrow-to-region. 
+;; narrow region: C-x n n   
+;; widen: C-x n w
+;; page: C-x n p
+;; defun: C-x n d
+(put 'narrow-to-region 'disabled nil)
+
+
+;; save state of emacs. https://www.gnu.org/software/emacs/manual/html_node/emacs/Saving-Emacs-Sessions.html#Saving-Emacs-Sessions
+(desktop-save-mode 1)
+
+;; In addition to C-x o
+(defun prev-window ()
+  "Go to previous window."
+  (interactive)
+  (other-window -1))
+
+(global-set-key (kbd "C-x p") 'prev-window)
+
+
+;; Add page up and down navigation on M-p and M-n
+(defun page-up ()
+  "Move one page up, number of lines in current window. "
+  (interactive) 
+  (setq this-command 'previous-line)
+  (previous-line (window-body-height)))
+
+(global-set-key (kbd "M-p") 'page-up)
+
+(defun page-down ()
+  "Move one page down, number of lines in current window. "
+  (interactive) 
+  (setq this-command 'next-line)
+  (next-line (window-body-height)))
+
+(global-set-key (kbd "M-n") 'page-down)
+
+
+(defun insert-comment-info ()
+    "Insert today's date using the current locale."
+    (interactive)
+    (insert "matthieu peeters:")
+    (insert (format-time-string "%Y-%m-%d"))
+    (insert " "))
+
+(global-set-key "\C-x\C-\\" 'insert-comment-info)
+
+
+(defun delete-file-and-buffer ()
+  "Kill the current buffer and deletes the file it is visiting."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (if filename
+        (if (y-or-n-p (concat "Do you really want to delete file " filename " ?"))
+            (progn
+              (delete-file filename)
+              (message "Deleted file %s." filename)
+              (kill-buffer)))
+      (message "Not a file visiting buffer!"))))
+
+(global-set-key (kbd "C-x DEL") 'delete-file-and-buffer)
+
+
+
+;; fix the PATH variable on Unix systems, by getting it from the shell
+
+(defun set-exec-path-from-shell-PATH ()
+  "Set up Emacs' `exec-path' and PATH environment variable to match that used by the user's shell.
+This is particularly useful under Mac OS X and macOS, where GUI
+apps are not started from a shell."
+  (interactive)
+  (let ((path-from-shell (replace-regexp-in-string
+			  "[ \t\n]*$" "" (shell-command-to-string
+					  "$SHELL --login -c 'echo $PATH'"
+						    ))))
+    (setenv "PATH" path-from-shell)
+    (setq exec-path (split-string path-from-shell path-separator))))
+
+
+(when window-system (set-exec-path-from-shell-PATH))
+
+
 
 ;; Color Themes
 ;; Read http://batsov.com/articles/2012/02/19/color-theming-in-emacs-reloaded/
@@ -26,15 +110,17 @@
 ;; for a more technical explanation.
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'load-path "~/.emacs.d/themes")
-(load-theme 'tomorrow-night-bright t)
+; (load-theme 'tomorrow-night-bright t)
+(load-theme 'material t)
+
 
 ;; increase font size for better readability
-(set-face-attribute 'default nil :height 140)
+(set-face-attribute 'default nil :height 100)
 
 ;; Uncomment the lines below by removing semicolons and play with the
 ;; values in order to set the width (in characters wide) and height
 ;; (in lines high) Emacs will have whenever you start it
-;; (setq initial-frame-alist '((top . 0) (left . 0) (width . 177) (height . 53)))
+(setq initial-frame-alist '((top . 0) (left . 0) (width . 177) (height . 53)))
 
 ;; These settings relate to how emacs interacts with your operating system
 (setq ;; makes killing/yanking interact with the clipboard
@@ -57,7 +143,7 @@
       mouse-yank-at-point t)
 
 ;; No cursor blinking, it's distracting
-(blink-cursor-mode 0)
+; (blink-cursor-mode nil)
 
 ;; full path in title bar
 (setq-default frame-title-format "%b (%f)")
@@ -69,8 +155,58 @@
 (setq ring-bell-function 'ignore)
 
 
-(setq global-hl-line-mode 1)
-
-(set-face-background 'hl-line "#4f4f0e")
-
 (set-face-foreground 'highlight nil)
+
+
+(put 'dired-find-alternate-file 'disabled nil)
+
+
+;; Changes all yes/no questions to y/n type
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; shell scripts
+(setq-default sh-basic-offset 2)
+(setq-default sh-indentation 2)
+
+;; No need for ~ files when editing
+(setq create-lockfiles nil)
+
+;; Go straight to scratch buffer on startup
+(setq inhibit-startup-message t)
+
+
+(setq display-buffer-alist ;; Setting window rules
+      '( 
+       ("\\*messages.*" ;; For buffer with a name beginning with "*messages", 
+        (display-buffer-in-side-window) ;; Display it in side window
+        (window-width . 0.25) ;; Side window takes up 1/4th of the screen
+        (side . right) ;; On the right side of the screen, please
+        )
+       ("\\*warnings.*" ;; For buffer with a name beginning with "*warnings",
+        (display-buffer-in-side-window) ;; Display it in side window
+        (window-width . 0.25) ;; Side window takes up 1/4th of the screen
+        (side . right) ;; On the right side of the screen, please
+        )))
+
+
+;; These customizations make it easier for you to navigate files,
+;; switch buffers, and choose options from the minibuffer.
+
+
+;; "When several buffers visit identically-named files,
+;; Emacs must give the buffers distinct names. The usual method
+;; for making buffer names unique adds ‘<2>’, ‘<3>’, etc. to the end
+;; of the buffer names (all but one of them).
+;; The forward naming method includes part of the file's directory
+;; name at the beginning of the buffer name
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Uniquify.html
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
+
+;; Turn on recent file mode so that you can more easily switch to
+;; recently edited files when you first start emacs
+(setq recentf-save-file (concat user-emacs-directory ".recentf"))
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-items 40)
+

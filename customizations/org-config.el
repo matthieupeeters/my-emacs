@@ -1,50 +1,77 @@
-;;; Code:
+;;; Org mode settings 
 
-(setf org-directory "~/org")
-
-(defun my-after-load-org ()
+(use-package org
+  :ensure t
+  :preface
+  (use-package ob-restclient :ensure t)
+  (setf org-directory "~/org")
+;; recursively find .org files in provided directory
+;; modified from an Emacs Lisp Intro example
+;; from: https://stackoverflow.com/questions/11384516/how-to-make-all-org-files-under-a-folder-added-in-agenda-list-automatically
+  (defun sa-find-org-file-recursively (&optional directory filext)
+    "Return .org and .org_archive files recursively from DIRECTORY.
+If FILEXT is provided, return files with extension FILEXT instead."
+    (interactive "DDirectory: ")
+    (let* (org-file-list
+           (case-fold-search t)         ; filesystems are case sensitive
+           (file-name-regex "^[^.#].*") ; exclude dot, autosave, and backupfiles
+           (filext (or filext "org$\\\|org_archive"))
+           (fileregex (format "%s\\.\\(%s$\\)" file-name-regex filext))
+           (cur-dir-list (directory-files directory t file-name-regex)))
+      ;; loop over directory listing
+      (dolist (file-or-dir cur-dir-list org-file-list) ; returns org-file-list
+	(cond
+	 ((file-regular-p file-or-dir)             ; regular files
+          (if (string-match fileregex file-or-dir) ; org files
+              (add-to-list 'org-file-list file-or-dir)))
+	 ((file-directory-p file-or-dir)
+          (dolist (org-file (sa-find-org-file-recursively file-or-dir filext)
+                            org-file-list) ; add files found to result
+            (add-to-list 'org-file-list org-file)))))))
+  :hook 
+  (org-mode . toggle-word-wrap)
+  :init 
+  :bind (("\C-cc" . org-capture)
+         :map org-mode-map
+         ("\C-cl" . org-store-link)
+         ("\C-ca" . org-agenda)
+         ("\C-cc" . org-capture)
+         ("\C-cb" . org-iswitchb)
+         ("\M-q" . toggle-truncate-lines))
+  :config
   (add-to-list 'org-modules 'org-timer)
-  (add-to-list 'org-modules 'org-mac-iCal))
+  (add-to-list 'org-modules 'org-habit)
+  (setq org-log-done 'time)
+  (setq org-enforce-todo-dependencies t)
+  (setq org-agenda-files (sa-find-org-file-recursively org-directory))
+  (setq org-src-fontify-natively t)
+  (setq org-startup-truncated nil)  ; This works
+  (setq org-default-notes-file (concat org-directory "/notes.org")))
 
-
-(eval-after-load "org" '(my-after-load-org))
-
-(require 'org)
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-cb" 'org-iswitchb)
-(setq org-log-done 'note)
-
-(setq org-agenda-files (mapcar (lambda (x) (concat org-directory "/" x ".org"))
-                        (list "work"
-                              "study"
-                              "general"
-                              "daily-routine"
-                              "medical")))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((lisp . t)))
+ '((lisp . t)
+   (emacs-lisp . t)
+   (css . t)
+   (shell . t)
+   (js . t)
+   (org . t)
+   (sql . t)
+   (sqlite . t)
+   (restclient . t)))
 
 
-(setq org-src-fontify-natively t)
-
-(require 'org-indent)
-
-(add-hook 'org-mode-hook #'toggle-word-wrap)
-
-(setq org-startup-truncated nil)  ; This works
-
-(define-key org-mode-map "\M-q" 'toggle-truncate-lines)
-
-(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
-(setq org-mobile-files (list org-directory))
+;; (setq org-agenda-files (mapcar (lambda (x) (concat org-directory "/" x ".org"))
+;;                                (list "work"
+;;                                      "study"
+;;                                      "general"
+;;                                      "daily-routine"
+;;                                      "medical")))
 
 
-(setq org-default-notes-file (concat org-directory "/notes.org"))
-(define-key global-map "\C-cc" 'org-capture)
+
+
 
 (setq org-agenda-custom-commands
       '(("C-ci" "Import diary from iCal" agenda ""
@@ -69,11 +96,43 @@
 
 
 ;; org-brain:
-(use-package org-brain :ensure t
+(use-package org-brain 
+  :ensure t
   :init
   (setq org-brain-path "~/org/brain")
   :config
   (setq org-id-track-globally t)
   (setq org-id-locations-file "~/org/.org-id-locations")
   (setq org-brain-visualize-default-choices 'all))
+
+;; From https://github.com/org-roam/org-roam
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory (file-truename org-directory))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture)
+         ;; Dailies
+         ("C-c n j" . org-roam-dailies-capture-today))
+  :config
+  ;; If you're using a vertical completion framework, you might want a more informative completion interface
+  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (org-roam-db-autosync-mode)
+  ;; If using org-roam-protocol
+  (require 'org-roam-protocol))
+
+;; Specific orgmode configuration goes here
+
+(defun sqlformat-org-block ()
+"Formats the sql-org-block the cursor is in."
+(interactive)
+  (when (org-in-src-block-p)
+   (org-edit-special)
+    (sqlformat-buffer)
+    (org-edit-src-exit)))
+
+
 

@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Nice weather isn't it?
 ;;; Code:
+(use-package flymake-php)
+
 (use-package web-mode
   :ensure t
   :mode "\\.phtml"

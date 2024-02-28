@@ -1,6 +1,7 @@
 
 (use-package org-static-blog
-  :ensure t)
+  :ensure t
+  :defer t)
 
 
 (setq org-static-blog-host "")

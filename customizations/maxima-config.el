@@ -2,6 +2,8 @@
 
 
 (use-package maxima
+  :ensure t
+  :after (org)
   :init
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0)
 	  maxima-display-maxima-buffer nil)

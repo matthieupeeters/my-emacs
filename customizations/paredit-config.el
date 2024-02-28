@@ -1,8 +1,9 @@
 
-
 (use-package paredit
   :ensure t
   :config
+  ;; Automatically load paredit when editing a lisp file
+  ;; More at http://www.emacswiki.org/emacs/ParEdit
   (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
   (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
   (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
@@ -23,4 +24,10 @@
     (set (make-local-variable 'paredit-space-for-delimiter-predicates)
          '((lambda (endp delimiter) nil)))
     (enable-paredit-mode)))
+
+
+(use-package paredit-everywhere
+  :ensure t)
+
+
 

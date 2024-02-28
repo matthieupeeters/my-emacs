@@ -1,7 +1,7 @@
 
-;;; Search
-(use-package dumb-jump
-  :ensure t)
+;;; Search - to be used with dired
+
+;;; https://stackoverflow.com/questions/4969373/emacs-find-grep-dired-then-automatically-isearch-forward-on-given-regexp
 
 
 ;;; Search support:

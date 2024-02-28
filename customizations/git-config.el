@@ -2,6 +2,18 @@
 (use-package magit
   :ensure t)
 
+(use-package git
+  :ensure t)
+
+(use-package git-auto-commit-mode
+  :ensure t)
+
+(use-package git-command
+  :ensure t)
+
+  ;; (use-package git-blame
+  ;;   :ensure t)
+ 
 
 
 
@@ -15,14 +27,3 @@
  ((string-equal system-type "gnu/linux") ; linux
   (progn
     (message "Not sure how to access git on Linux"))))
-
-; /usr/local/Cellar/git/2.11.0/share/emacs/site-lisp/git/git.el
-(use-package git
-  :ensure t)
-
-                                        ;
-
-
-  ;; (use-package git-blame
-  ;;   :ensure t)
- 

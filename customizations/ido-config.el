@@ -1,5 +1,12 @@
 ;; from emacs-for-clojure : navigation.el
 
+;; allow ido usage in as many contexts as possible. see
+;; customizations/navigation.el line 23 for a description
+;; of ido
+(use-package ido-completing-read+
+  :ensure t)
+
+
 
 ;; ido-mode allows you to more easily navigate choices. For example,
 ;; when you want to switch buffers, ido presents you with a list
@@ -35,6 +42,12 @@
 
 
 ;; smex things
+
+
+(use-package smex
+  :ensure t)
+
+
 
 ;; Enhances M-x to allow easier execution of commands. Provides
 ;; a filterable list of possible commands in the minibuffer

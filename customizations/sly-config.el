@@ -1,8 +1,6 @@
 
 (use-package sly 
-  :ensure t)
-
-
-(eval-after-load 'sly
-  `(define-key sly-prefix-map (kbd "M-h") 'sly-documentation-lookup))
+  :ensure t
+  :bind (:map sly-prefix-map
+              ("\M-h" . sly-documentation-lookup)))
 

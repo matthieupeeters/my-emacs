@@ -1,113 +1,101 @@
-
-;; From emacs-for-clojure : shell-integration.el
-
-;; On OS X, an Emacs instance started from the graphical user
-;; interface will have a different environment than a shell in a
-;; terminal window, because OS X does not run a shell during the
-;; login. Obviously this will lead to unexpected results when
-;; calling external utilities like make from Emacs.
-;; This library works around this problem by copying important
-;; environment variables from the user's shell.
-;; https://github.com/purcell/exec-path-from-shell
-(if (eq system-type 'darwin)
-    (use-package exec-path-from-shell
-      :ensure t))
-
-
-
-;; Sets up exec-path-from shell
-;; https://github.com/purcell/exec-path-from-shell
-
-
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-envs
-   '("PATH")))
-
-
-;; From emacs-for-clojure : ui.el
-;; Color Themes
-;; Read http://batsov.com/articles/2012/02/19/color-theming-in-emacs-reloaded/
-;; for a great explanation of emacs color themes.
-;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Custom-Themes.html
-;; for a more technical explanation.
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(add-to-list 'load-path "~/.emacs.d/themes")
-(load-theme 'tomorrow-night-bright t)
-
-
-
 ;; from emacs-for-clojure
+;; Clojure
+
+
+;; integration with a Clojure REPL
+;; https://github.com/clojure-emacs/cider
+;;;;
+;; Cider
+;;;;
+
+(package-install 'cider)
+
+(use-package cider
+  :ensure t
+  :hook (
+         ;; provides minibuffer documentation for the code you're typing into the repl
+         (cider-mode . eldoc-mode)
+         ;; enable paredit in your REPL
+         (cider-repl-mode . paredit-mode))
+  :preface 
+  :config
+  ;; go right to the REPL buffer when it's finished connecting
+  (setq cider-repl-pop-to-buffer-on-connect t)
+  ;; When there's a cider error, show its buffer and switch to it
+  (setq cider-show-error-buffer t)
+  (setq cider-auto-select-error-buffer t)
+  ;; Where to store the cider history.
+  (setq cider-repl-history-file "~/.emacs.d/cider-history")
+  ;; Wrap when navigating history.
+  (setq cider-repl-wrap-history t)
+  :bind ((:map clojure-mode-map
+               ("C-c C-v" . cider-start-http-server)
+               ("C-M-r" . cider-refresh)
+               ("C-c u" . cider-user-ns)
+               :map cider-mode-map
+               ("C-c u" . cider-user-ns))))
+
+;; these help me out with the way I usually develop web apps
+(defun cider-start-http-server ()
+  (interactive)
+  (cider-load-current-buffer)
+  (let ((ns (cider-current-ns)))
+    (cider-repl-set-ns ns)
+    (cider-interactive-eval (format "(println '(def server (%s/start))) (println 'server)" ns))
+    (cider-interactive-eval (format "(def server (%s/start)) (println server)" ns))))
+(defun cider-refresh ()
+  (interactive)
+  (cider-interactive-eval (format "(user/reset)")))
+(defun cider-user-ns ()
+  (interactive)
+  (cider-repl-set-ns "user"))
+
+
+
+;;;;
+;; Clojure
+;;;;
+
+
 
 
 ;; key bindings and code colorization for Clojure
 ;; https://github.com/clojure-emacs/clojure-mode
 (use-package clojure-mode
+  :ensure t
+  :after (cider)
+  :hook (;; Enable paredit for Clojure
+         (clojure-mode . enable-paredit-mode)
+         ;; This is useful for working with camel-case tokens, like names of
+         ;; Java classes (e.g. JavaClassName)
+         (clojure-mode . subword-mode)
+         ;; syntax hilighting for midje
+         (clojure-mode . 
+                       (lambda ()
+                         (setq inferior-lisp-program "lein repl")
+                         (font-lock-add-keywords
+                          nil
+                          '(("(\\(facts?\\)"
+                             (1 font-lock-keyword-face))
+                            ("(\\(background?\\)"
+                             (1 font-lock-keyword-face))))
+                         (define-clojure-indent (fact 1))
+                         (define-clojure-indent (facts 1))
+                         (rainbow-delimiters-mode))))
+  :config
+  ;; Use clojure mode for other extensions
+  (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
+  (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
+  (add-to-list 'auto-mode-alist '("\\.cljs.*$" . clojure-mode))
+  (add-to-list 'auto-mode-alist '("lein-env" . enh-ruby-mode))
+  
+  )
+
+;; A little more syntax highlighting
+(use-package clojure-mode-extra-font-locking
   :ensure t)
 
 ;; extra syntax highlighting for clojure
 (use-package clojure-mode-extra-font-locking
   :ensure t)
-
-;; integration with a Clojure REPL
-;; https://github.com/clojure-emacs/cider
-(use-package cider
-  :ensure t)
-
-
-;; allow ido usage in as many contexts as possible. see
-;; customizations/navigation.el line 23 for a description
-;; of ido
-(use-package ido-completing-read+
-  :ensure t)
-
-;; Enhances M-x to allow easier execution of commands. Provides
-;; a filterable list of possible commands in the minibuffer
-;; http://www.emacswiki.org/emacs/Smex
-(use-package smex
-  :ensure t)
-
-;; project navigation
-(use-package projectile
-  :ensure t)
-
-;; colorful parenthesis matching
-(use-package rainbow-delimiters
-  :ensure t)
-
-;; edit html tags like sexps
-(use-package tagedit
-  :ensure t)
-;; not from emacs-for-clojure
-
-
-
-;; Clojure
-
-(defvar my-packages '(auto-complete
-                      better-defaults
-                      projectile
-                      clojure-mode
-                      cider))
-(dolist (p my-packages)
-  (unless (package-installed-p p)
-    (package-install p)))
-
-(use-package auto-complete
-  :ensure t)
-(use-package better-defaults
-  :ensure t)
-(use-package projectile
-  :ensure t)
-(use-package clojure-mode
-  :ensure t)
-(use-package cider
-  :ensure t)
-
-
-
-
-(put 'erase-buffer 'disabled nil)
-
-
 

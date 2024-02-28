@@ -1,4 +1,6 @@
 
 
-(package-install 'omnisharp)
+(use-package omnisharp 
+  :ensure t
+  :defer t)
 
