@@ -1,0 +1,4 @@
+* Thirdparty directory
+This is the place where non-elpa extensions go. 
+
+Create directories or submodules here. 
