@@ -61,4 +61,13 @@
 ;; Allow the command erase-buffer to be used.
 (put 'erase-buffer 'disabled nil)
 
+(defun insert-comment-info ()
+    "Insert today's date using the current locale."
+    (interactive)
+    (insert "matthieu peeters:")
+    (insert (format-time-string "%Y-%m-%d"))
+    (insert " "))
+
+(global-set-key "\C-x\C-\\" 'insert-comment-info)
+
 

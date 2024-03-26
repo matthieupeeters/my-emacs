@@ -58,15 +58,6 @@
 (global-set-key (kbd "M-n") 'page-down)
 
 
-(defun insert-comment-info ()
-    "Insert today's date using the current locale."
-    (interactive)
-    (insert "matthieu peeters:")
-    (insert (format-time-string "%Y-%m-%d"))
-    (insert " "))
-
-(global-set-key "\C-x\C-\\" 'insert-comment-info)
-
 
 (defun delete-file-and-buffer ()
   "Kill the current buffer and deletes the file it is visiting."
