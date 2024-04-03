@@ -13,6 +13,12 @@
     ("!"  . nil)                        ; first unbind ¡
     ("!=" . [?≠])                       ; way better than ¡ or using /=
     ("!!" . [?¡])                       ; still want to use ¡
+
+    ("$" . nil)                         ; unbind ¤, as we want to use it for other symbols
+    ("$e" . [?€])                        ; Bind to Euro
+    ("$l" . [?£])
+    ("$o" . [?¤])
+
     ;; Polish letters
 
     (",a" . [?ą])

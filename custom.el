@@ -20,7 +20,7 @@
  ;; If there is more than one, they won't work right.
  '(coffee-tab-width 2)
  '(package-selected-packages
-   '(which-key web-mode use-package-chords try tagedit sqlformat smex sly shut-up rainbow-delimiters py-autopep8 projectile php-mode paredit-everywhere ormolu org-static-blog org-roam org-brain omnisharp ob-restclient oauth2 notmuch-indicator notmuch neotree maxima magit lsp-ui lsp-ivy lsp-haskell json-mode js2-mode ido-completing-read+ helm-lsp git-command git-auto-commit-mode git geiser-guile flymake-php flymake-jslint flymake-jshint eww-lnum elpy dumb-jump diminish dap-mode clojure-mode-extra-font-locking cider blacken better-defaults auto-package-update)))
+   '(which-key web-mode use-package-ensure-system-package use-package-chords try tagedit sqlformat smex sly shut-up rainbow-delimiters py-autopep8 projectile paredit-everywhere ormolu org-static-blog org-roam org-brain omnisharp ob-restclient oauth2 notmuch-indicator notmuch neotree maxima magit lsp-ui lsp-ivy lsp-haskell json-mode js2-mode ido-completing-read+ helm-lsp git-command git-auto-commit-mode git geiser-guile flymake-php flymake-jslint flymake-jshint eww-lnum elpy dumb-jump diminish dap-mode clojure-mode-extra-font-locking cider blacken better-defaults auto-package-update ac-php)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

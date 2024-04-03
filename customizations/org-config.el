@@ -5,15 +5,17 @@
   :preface
   (use-package ob-restclient :ensure t)
   (setf org-directory "~/org")
-;; recursively find .org files in provided directory
-;; modified from an Emacs Lisp Intro example
-;; from: https://stackoverflow.com/questions/11384516/how-to-make-all-org-files-under-a-folder-added-in-agenda-list-automatically
+  (unless (file-exists-p org-directory)
+    (make-directory org-directory))
+  ;; recursively find .org files in provided directory
+  ;; modified from an Emacs Lisp Intro example
+  ;; from: https://stackoverflow.com/questions/11384516/how-to-make-all-org-files-under-a-folder-added-in-agenda-list-automatically
   (defun sa-find-org-file-recursively (&optional directory filext)
     "Return .org and .org_archive files recursively from DIRECTORY.
 If FILEXT is provided, return files with extension FILEXT instead."
     (interactive "DDirectory: ")
     (let* (org-file-list
-           (case-fold-search t)         ; filesystems are case sensitive
+           (case-fold-search t)	      ; filesystems are case sensitive
            (file-name-regex "^[^.#].*") ; exclude dot, autosave, and backupfiles
            (filext (or filext "org$\\\|org_archive"))
            (fileregex (format "%s\\.\\(%s$\\)" file-name-regex filext))

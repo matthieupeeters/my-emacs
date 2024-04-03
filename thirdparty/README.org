@@ -1,0 +1,9 @@
+* Thirdparty directory
+This is the place where non-elpa extensions go. 
+
+Create directories or submodules here. 
+
+
+* thirdparty-init.el
+
+In this file the code that prepares those extensions enables should go, so adding to load-path, and loading or requiring the right files. 
