@@ -2,9 +2,8 @@
 ;;; Code:
 
 
-
 (package-initialize)
-(add-to-list 'load-path "~/.emacs.d/customizations")
+(add-to-list 'load-path (concat (file-name-directory (or load-file-name (buffer-file-name))) "customizations"))
 
 
 (load "custom.el") ; this file is in the same directory as init.el.
@@ -58,8 +57,8 @@
 (load "translate-char.el")
 (load "emacsclient-server.el")
 
+(load (concat (file-name-directory (or load-file-name (buffer-file-name))) "thirdparty/thirdparty-init.el"))
+
 ;;; init.el ends here
-
-
 
 

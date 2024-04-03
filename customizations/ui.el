@@ -90,7 +90,7 @@ apps are not started from a shell."
     (setq exec-path (split-string path-from-shell path-separator))))
 
 
-(when window-system (set-exec-path-from-shell-PATH))
+(when (not window-system) (set-exec-path-from-shell-PATH))
 
 
 
