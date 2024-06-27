@@ -61,7 +61,9 @@ If FILEXT is provided, return files with extension FILEXT instead."
    (org . t)
    (sql . t)
    (sqlite . t)
-   (restclient . t)))
+   (restclient . t)
+   (mermaid . t)
+   (scheme .t)))
 
 
 ;; (setq org-agenda-files (mapcar (lambda (x) (concat org-directory "/" x ".org"))

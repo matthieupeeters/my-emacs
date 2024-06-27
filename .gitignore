@@ -41,3 +41,5 @@ elpa/
 /games/
 
 .last-package-update-day
+/orgpersist/
+/org-persist/

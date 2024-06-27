@@ -7,7 +7,7 @@
   :hook ((haskell-mode . lsp) 
          (haskell-literate-mode . lsp))
   :bind (("C-M-x" . haskell-interactive-bring) ;; Bind Haskell REPL to C-M-x
-         ("C-f" . ormolu-format-buffer)) ;; Bind formatting to C-f
+         ("C-c C-f" . ormolu-format-buffer)) ;; Bind formatting to C-c C-f
   :config
   (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-compile)
   (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-compile)

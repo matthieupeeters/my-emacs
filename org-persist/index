@@ -1,9 +1,0 @@
-((:container
-  ((elisp org-element--headline-cache)
-   (elisp org-element--cache))
-  :persist-file "dc/f5cda4-77b6-42a9-8810-c6243ae5745d" :associated
-  (:hash "5af4424bdb9b5e73384ada256e0ad9f2" :file "c:/Users/MPe1809.44129/source/repos/NKR_Cijfers/database_migration/proposal.org" :inode 7318349396217398)
-  :expiry 30 :last-access 1711813005.952838 :last-access-hr "2024-03-30T16:36:45+0100")
- (:container
-  ((index "3.1"))
-  :persist-file "4e/acd3a7-93a6-43d1-b8a4-38a2b26a6a07" :associated nil :expiry never :last-access 1711813005.957958 :last-access-hr "2024-03-30T16:36:45+0100"))
