@@ -11,6 +11,9 @@
 (setq show-paren-delay 0)
 
 
+;; from: https://emacs.stackexchange.com/questions/35959/emacs-blue-color-too-dark
+(setq frame-background-mode 'dark)
+
 ;; Show line numbers
 ; (global-linum-mode)
 
