@@ -136,8 +136,6 @@ apps are not started from a shell."
       ;; Mouse yank commands yank at point instead of at click.
       mouse-yank-at-point t)
 
-;; No cursor blinking, it's distracting
-; (blink-cursor-mode nil)
 
 ;; full path in title bar
 (setq-default frame-title-format "%b (%f)")

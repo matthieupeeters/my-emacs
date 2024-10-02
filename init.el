@@ -27,7 +27,7 @@
 (load "js-config.el") ; json mode as well
 (load "sql-config.el")
 (load "csharp-config.el")
-(load "python-config.el")
+; (load "python-config.el")
 (load "maxima-config.el")
 (load "sly-config.el")
 (load "elisp-config.el")
