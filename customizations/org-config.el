@@ -4,6 +4,8 @@
   :ensure t
   :preface
   (use-package ob-restclient :ensure t)
+  (use-package ob-mermaid :ensure t)
+  (use-package mermaid-mode :ensure t)
   (setf org-directory "~/org")
   (unless (file-exists-p org-directory)
     (make-directory org-directory))
