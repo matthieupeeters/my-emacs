@@ -57,6 +57,8 @@
 (load "translate-char.el")
 (load "emacsclient-server.el")
 
+(load "tramp-config.el")
+
 (load (concat (file-name-directory (or load-file-name (buffer-file-name))) "thirdparty/thirdparty-init.el"))
 
 ;;; init.el ends here

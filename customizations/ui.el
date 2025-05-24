@@ -23,6 +23,8 @@
 (setq-default indent-tabs-mode nil)
 
 
+
+
 ;; Enable narrow-to-region. 
 ;; narrow region: C-x n n   
 ;; widen: C-x n w
@@ -97,6 +99,10 @@ apps are not started from a shell."
 
 
 
+
+(set-face-foreground 'highlight nil)
+(set-frame-font "Lucida Console 12" nil t)
+
 ;; Color Themes
 ;; Read http://batsov.com/articles/2012/02/19/color-theming-in-emacs-reloaded/
 ;; for a great explanation of emacs color themes.
@@ -142,12 +148,6 @@ apps are not started from a shell."
 
 ;; don't pop up font menu
 (global-set-key (kbd "s-t") '(lambda () (interactive)))
-
-;; no bell
-(setq ring-bell-function 'ignore)
-
-
-(set-face-foreground 'highlight nil)
 
 
 (put 'dired-find-alternate-file 'disabled nil)
@@ -202,3 +202,8 @@ apps are not started from a shell."
 (recentf-mode 1)
 (setq recentf-max-menu-items 40)
 
+
+
+
+;; Make the week in the calendar start on Monday
+(setq calendar-week-start-day 1)

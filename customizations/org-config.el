@@ -48,6 +48,7 @@ If FILEXT is provided, return files with extension FILEXT instead."
   (setq org-agenda-files (sa-find-org-file-recursively org-directory))
   (setq org-src-fontify-natively t)
   (setq org-startup-truncated nil)  ; This works
+  (setq org-agenda-include-diary t)
   (setq org-default-notes-file (concat org-directory "/notes.org")))
 
 
@@ -137,6 +138,9 @@ If FILEXT is provided, return files with extension FILEXT instead."
    (org-edit-special)
     (sqlformat-buffer)
     (org-edit-src-exit)))
+
+
+
 
 
 

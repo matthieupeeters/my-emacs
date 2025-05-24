@@ -45,9 +45,6 @@
   (auto-package-update-at-time "09:00"))
 
 
-(use-package use-package-ensure-system-package
-  :ensure t)
-
 (use-package use-package-chords
   :ensure t
   :config (key-chord-mode 1))
