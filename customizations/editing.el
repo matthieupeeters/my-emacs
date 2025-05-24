@@ -12,12 +12,6 @@
         try-complete-lisp-symbol-partially
         try-complete-lisp-symbol))
 
-(require 'hl-line)
-(set-face-background 'hl-line "#0f0f0f")
-;; Highlight current line
-(global-hl-line-mode 1)
-
-(setq-default cursor-type 'box)
 
 ;; Don't use hard tabs
 (setq-default indent-tabs-mode nil)
