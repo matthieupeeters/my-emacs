@@ -9,6 +9,8 @@
 (load "custom.el") ; this file is in the same directory as init.el.
 ;; the rest is in ./customizations
 
+(load "mermaid-config.el")
+
 (load "utf-8-config.el")
 
 (load "package-config.el")
