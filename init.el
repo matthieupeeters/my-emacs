@@ -23,6 +23,8 @@
 (load "scheme-config.el")
 
 (load "lsp-config.el")
+(load "eglot-config.el")
+
 
 (load "ido-config.el") ; this file also contains smex and projectile config
 (load "php-config.el")

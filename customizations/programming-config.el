@@ -11,7 +11,9 @@
   :ensure t
   :init (global-flycheck-mode)
   :config
-  (add-hook 'after-init-hook #'global-flycheck-mode))
+  (add-hook 'after-init-hook #'global-flycheck-mode)
+  :after (global-flycheck-eglot-mode 1)
+  )
 
 
 (use-package flymake
