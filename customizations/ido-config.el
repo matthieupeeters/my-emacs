@@ -58,7 +58,18 @@
 
 
 
+
+
 ;; projectile 
 
-(projectile-global-mode)
+(use-package projectile
+  :ensure t
+  :pin melpa-stable
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :config
+  (projectile-mode +1))
+
+
+
 

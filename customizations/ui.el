@@ -12,7 +12,7 @@
 
 
 ;; from: https://emacs.stackexchange.com/questions/35959/emacs-blue-color-too-dark
-(setq frame-background-mode 'dark)
+; (setq frame-background-mode 'dark)
 
 ;; Show line numbers
 ; (global-linum-mode)
@@ -114,31 +114,31 @@ apps are not started from a shell."
 ;; for a great explanation of emacs color themes.
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Custom-Themes.html
 ;; for a more technical explanation.
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(add-to-list 'load-path "~/.emacs.d/themes")
+;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+;(add-to-list 'load-path "~/.emacs.d/themes")
 ; (load-theme 'tomorrow-night t)
 ;  (load-theme 'material t)
 ; (load-theme 'zenburn)
 
+(if nil ;; No more doom themes
+    ;; From https://github.com/doomemacs/themes
+    (use-package doom-themes
+      :ensure t
+      :config
+      ;; Global settings (defaults)
+      (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+            doom-themes-enable-italic t) ; if nil, italics is universally disabled
+      (load-theme 'doom-one t)
 
-;; From https://github.com/doomemacs/themes
-(use-package doom-themes
-  :ensure t
-  :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-one t)
-
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (nerd-icons must be installed!)
-  (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  (doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+      ;; Enable flashing mode-line on errors
+      (doom-themes-visual-bell-config)
+      ;; Enable custom neotree theme (nerd-icons must be installed!)
+      (doom-themes-neotree-config)
+      ;; or for treemacs users
+      (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+      (doom-themes-treemacs-config)
+      ;; Corrects (and improves) org-mode's native fontification.
+      (doom-themes-org-config)))
 
 ;; increase font size for better readability
 (set-face-attribute 'default nil :height 100)

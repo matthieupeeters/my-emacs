@@ -122,6 +122,28 @@
     ("_7" . [?₇])
     ("_8" . [?₈])
     ("_9" . [?₉])
+    ;; some set math
+    ("%e" . [?∈])
+    ("%!e" . [?∉])
+    ("%E" . [?∋])
+    ("%!E" . [?∌])
+    ("%0" . [?∅])
+    ("%=<" . [?⊆])
+    ("%!=<" . [?⊈])
+    ("%=>" . [?⊇])
+    ("%!=>" . [?⊉])
+    ("%<" . [?⊂])
+    ("%!<" . [?⊄])
+    ("%>" . [?⊃])
+    ("%!>" . [?⊅])
+    ("%U" . [?∪]) ; union
+    ("%N" . [?∩]) ; intersection
+    ("%D" . [?⊔]) ; disjoint union (undefined if an element is in both)
+    ("%X" . [?⊕]) ; exclusive union (only elemnent in one or the other)
+    ("%/" . [?∕]) 
+    ("%\\" . [?∖]) ; difference / set-minus 
+    ("%C" . [?∁]) ; set-Complement (except)
+    
     ))
 
 (require 'iso-transl)
