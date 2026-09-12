@@ -12,7 +12,7 @@
   :init (global-flycheck-mode)
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode)
-  :after (global-flycheck-eglot-mode 1)
+  :config (global-flycheck-eglot-mode 1)
   )
 
 
